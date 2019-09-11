@@ -5,8 +5,8 @@ using Mirror;
 
 public class Select : NetworkBehaviour
 {
-    private Transform trans;
-    private Camera cam;
+    private new Transform transform;
+    private new Camera camera;
     [SerializeField] private Material selectionMaterial;
     [SerializeField] private Material defaultMeterial;
     private string SelectableTag = "Selectable";
@@ -21,8 +21,8 @@ public class Select : NetworkBehaviour
         {
             return;
         }
-        trans = GetComponent<Transform>();
-        cam = GetComponentInChildren<Camera>();
+        transform = GetComponent<Transform>();
+        camera = GetComponentInChildren<Camera>();
         
     }
 
@@ -55,7 +55,7 @@ public class Select : NetworkBehaviour
                 toggle = false;
             }
             //Let's cast a ray
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if(Physics.Raycast(ray,out hit))
             {

@@ -77,13 +77,10 @@ public class Controls : NetworkBehaviour
     
     bool _isGrounded()
     {
-        //bit shift the index layer (9) to get a bit mask
-        int LayerMask = 1 << 9;
-
         //Create a new Ray
-        Ray ray = new Ray(transform.position, transform.up * -1);
+        Ray ray = new Ray(transform.position, Vector3.up * -1);
         RaycastHit hit;
-        if(Physics.Raycast(ray,out hit, transform.localScale.y + 0.2f, LayerMask))
+        if(Physics.Raycast(ray,out hit, 2f))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down)*1 , Color.black);
             Debug.Log("Hit: " + hit);
