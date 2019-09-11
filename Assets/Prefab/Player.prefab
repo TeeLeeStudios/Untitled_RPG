@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncInterval: 0.1
   Speed: 10
-  JumpHeight: 8
+  JumpHeight: 5
 --- !u!114 &-3069526813859213072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +303,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FieldOfView: 70
-  sensitivity: 5
+  sensitivity: 3
   smoothing: 2
   character: {fileID: 0}

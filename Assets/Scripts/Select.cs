@@ -23,7 +23,15 @@ public class Select : NetworkBehaviour
         }
         transform = GetComponent<Transform>();
         camera = GetComponentInChildren<Camera>();
-        
+        if (!selectionMaterial)
+        {
+            Debug.Log("NO SELECTION MATERIAL SELECTED");
+        }
+        if (!defaultMeterial)
+        {
+            Debug.Log("NO DEFAULT MATERIAL SELECTED");
+        }
+
     }
 
     // Update is called once per frame

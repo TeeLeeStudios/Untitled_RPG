@@ -6,7 +6,7 @@ using Mirror;
 public class CameraController : MonoBehaviour
 {
     public float FieldOfView = 70f;
-    public float sensitivity = 0.5f;
+    public float sensitivity = 3f;
     public float smoothing = 4.0f;
     // the character is the capsule
     public GameObject character;
