@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4711782070615988567}
   m_Layer: 8
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,8 +105,8 @@ GameObject:
   - component: {fileID: 774103662831005419}
   - component: {fileID: 571387207824256527}
   - component: {fileID: 2633930167570993732}
-  - component: {fileID: 7043365627912234305}
   - component: {fileID: -3069526813859213072}
+  - component: {fileID: 6904305185217794556}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -144,8 +144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverOnly: 0
   localPlayerAuthority: 1
-  m_AssetId: 
-  m_SceneId: 1624304859
+  m_AssetId: e229b7c9802eea341a82a144ac50d297
+  m_SceneId: 0
 --- !u!114 &571387207824256527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,22 +175,6 @@ MonoBehaviour:
   syncInterval: 0.1
   Speed: 10
   JumpHeight: 8
---- !u!54 &7043365627912234305
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7052523405762710702}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!114 &-3069526813859213072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +190,22 @@ MonoBehaviour:
   syncInterval: 0.1
   selectionMaterial: {fileID: 2100000, guid: adfc5291918c0954891f1ed822e282a0, type: 2}
   defaultMeterial: {fileID: 2100000, guid: ddab3137a775e8b4aa6d8aa0b1d3f0b3, type: 2}
+--- !u!54 &6904305185217794556
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7052523405762710702}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
 --- !u!1 &8084804873402718123
 GameObject:
   m_ObjectHideFlags: 0

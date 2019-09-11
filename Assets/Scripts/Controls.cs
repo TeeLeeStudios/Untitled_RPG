@@ -79,10 +79,8 @@ public class Controls : NetworkBehaviour
     {
         //Create a new Ray
         Ray ray = new Ray(transform.position, Vector3.up * -1);
-        RaycastHit hit;
-        if(Physics.Raycast(ray,out hit, 2f))
+        if (Physics.Raycast(ray, out RaycastHit hit, transform.localScale.y + 0.2f))
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down)*1 , Color.black);
             Debug.Log("Hit: " + hit);
             return true;
         }
