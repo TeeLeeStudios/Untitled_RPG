@@ -18,20 +18,24 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        //If the camera has no parent then turn off the camera
         if (!this.transform.parent)
         {
             gameObject.GetComponent<Camera>().enabled = false;
             gameObject.GetComponent<AudioListener>().enabled = false;
             return;
         }
+        //If the camera's parent is not our player then turn off the camera
         if (!this.transform.parent.GetComponent<Controls>().isLocalPlayer)
         {
             gameObject.GetComponent<Camera>().enabled = false;
             gameObject.GetComponent<AudioListener>().enabled = false;
             return;
         }
+        //Verified that this is our character's Camera from ^ so let's set it
         character = this.transform.parent.gameObject;
-        //Setting FOV
+
+        //Setting FOV so that it can be managed by player settings later
         myCamera = GetComponent<Camera>();
         if (myCamera)
         {
@@ -41,6 +45,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+        //Confirm this is our player first
         if (!this.transform.parent)
         {
             return;
@@ -49,7 +54,8 @@ public class CameraController : MonoBehaviour
         {
             return;
         }
-
+        
+        //1st Person Camera Controls
         var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
         // the interpolated float result between the two float values
@@ -57,7 +63,9 @@ public class CameraController : MonoBehaviour
         smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
         // incrementally add to the camera look
         mouseLook += smoothV;
+        //Let's make sure our player cannot exceed 90 degrees up or down with the camera
         mouseLook.y = Mathf.Clamp(mouseLook.y, -90, 90);
+        //Apply the calculated camera movement
         // vector3.right means the x-axis
         transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
         character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);

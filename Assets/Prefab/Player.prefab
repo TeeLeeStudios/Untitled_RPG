@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 571387207824256527}
   - component: {fileID: 2633930167570993732}
   - component: {fileID: 7043365627912234305}
+  - component: {fileID: -3069526813859213072}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -144,7 +145,7 @@ MonoBehaviour:
   serverOnly: 0
   localPlayerAuthority: 1
   m_AssetId: 
-  m_SceneId: 2957020574
+  m_SceneId: 1624304859
 --- !u!114 &571387207824256527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,6 +191,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &-3069526813859213072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7052523405762710702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8f7c159f9bfc8243b4d9427ba47b0eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncInterval: 0.1
+  selectionMaterial: {fileID: 2100000, guid: adfc5291918c0954891f1ed822e282a0, type: 2}
+  defaultMeterial: {fileID: 2100000, guid: ddab3137a775e8b4aa6d8aa0b1d3f0b3, type: 2}
 --- !u!1 &8084804873402718123
 GameObject:
   m_ObjectHideFlags: 0
