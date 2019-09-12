@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Selectable
+  - Settings
   layers:
   - Default
   - TransparentFX
