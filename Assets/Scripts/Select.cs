@@ -7,8 +7,8 @@ public class Select : NetworkBehaviour
 {
     private new Transform transform;
     private new Camera camera;
-    [SerializeField] private Material selectionMaterial;
-    [SerializeField] private Material defaultMeterial;
+    [SerializeField] private Material selectionMaterial = null;
+    [SerializeField] private Material defaultMeterial = null;
     private string SelectableTag = "Selectable";
     private bool toggle = false;
 
@@ -23,11 +23,11 @@ public class Select : NetworkBehaviour
         }
         transform = GetComponent<Transform>();
         camera = GetComponentInChildren<Camera>();
-        if (!selectionMaterial)
+        if (!selectionMaterial && selectionMaterial.Equals(null))
         {
             Debug.Log("NO SELECTION MATERIAL SELECTED");
         }
-        if (!defaultMeterial)
+        if (!defaultMeterial && defaultMeterial.Equals(null))
         {
             Debug.Log("NO DEFAULT MATERIAL SELECTED");
         }
@@ -43,7 +43,7 @@ public class Select : NetworkBehaviour
             return;
         }
 
-        if (_Selection != null)
+        if (_Selection != null && !_Selection.Equals(null) )
         {
             Renderer hitRend = _Selection.GetComponent<Renderer>();
             if (toggle == false)
@@ -75,7 +75,7 @@ public class Select : NetworkBehaviour
                     //Let's get the renderer component so we can change the material
                     Renderer hitRend = hitTrans.GetComponent<Renderer>();
                     //Verify we have a renderer and change the material to the selection material
-                    if (hitRend != null)
+                    if (hitRend != null && !hitRend.Equals(null))
                     {
                         if (toggle == true)
                         {

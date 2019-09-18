@@ -7,12 +7,21 @@ public class Player : MonoBehaviour
     //Singleton instance of this class
     public Player player;
 
+    //Adjustable settings for survival
+    public float SecondsPerHunger = 6;
+    public float SecondsPerThirst = 3;
+    public float DamagePerTick = 2;
+    
+    //Possible states that our player may be in.
     private readonly string[] AcceptableStates = {"idle","sitting","laying","prone","walking","running","swimming","mounted","unconcious","revival","dead" };
 
+    //Timers to adjust thirst and hunger
+    private float ThirstTimer = 0;
+    private float HungerTimer = 0;
 
+    //Called before start and should be used only for initialization
     void Awake()
     {
-        player = this;
         MaxHP = 100;
         CurrentHP = 100;
         MaxMP = 100;
@@ -22,10 +31,26 @@ public class Player : MonoBehaviour
         Hunger = 100;
         Thirst = 100;
         State = "idle";
+        player = this;
+    }
+
+    //Called once per frame
+    void Update()
+    {
+        //If we are able to set the next timer then take some thirst and hunger
+        if (SetTimer(ThirstTimer, SecondsPerThirst))
+        {
+            TakeThirst(player);
+        }
+        if (SetTimer(HungerTimer, SecondsPerHunger))
+        {
+            TakeHunger(player);
+        }
+
     }
 
     #region Properties
-    int CurrentHP
+    float CurrentHP
     {
         get
         { return CurrentHP; }
@@ -34,7 +59,7 @@ public class Player : MonoBehaviour
         { CurrentHP = value; }
     }
 
-    public int MaxHP
+    float MaxHP
     {
         get
         { return MaxHP; }
@@ -42,7 +67,7 @@ public class Player : MonoBehaviour
         { MaxHP = value; }
     }
 
-    int CurrentMP
+    float CurrentMP
     {
         get
         { return CurrentMP; }
@@ -50,15 +75,15 @@ public class Player : MonoBehaviour
         { CurrentMP = value; }
     }
 
-    int MaxMP
+    float MaxMP
     {
         get
         { return MaxMP; }
         set
         { MaxMP = value; }
     }
-    
-    int CurrentStamina
+
+    float CurrentStamina
     {
         get
         { return CurrentStamina; }
@@ -66,7 +91,7 @@ public class Player : MonoBehaviour
         { CurrentStamina = value; }
     }
 
-    int MaxStamina
+    float MaxStamina
     {
         get
         { return MaxStamina; }
@@ -74,7 +99,7 @@ public class Player : MonoBehaviour
         { MaxStamina = value; }
     }
 
-    int Hunger
+    float Hunger
     {
         get
         { return Hunger; }
@@ -82,7 +107,7 @@ public class Player : MonoBehaviour
         { Hunger = value; }
     }
 
-    int Thirst
+    float Thirst
     {
         get
         { return Thirst; }
@@ -117,20 +142,84 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    void Update()
+
+    #region Methods
+    //Check to see if player should be unconscious/dead and adjust state accordingly.
+    float HPStateUpdate(Player target)
     {
-        if (CurrentHP <= 0 && (State != "unconcious" || State != "dead"))
+        if (target.CurrentHP <= 0 && (target.State != "unconcious" || target.State != "dead"))
         {
             //Current hp is 0 or lower and player is not already dead/unconcious
-            player.State = "unconcious";
-        } else if (CurrentHP <= -MaxHP && State != "dead")
+            target.State = "unconcious";
+            return 1;
+        }
+        else if (target.CurrentHP <= -target.MaxHP && target.State != "dead")
         {
             //Current hp is at the death threshold and player is not already dead
-            player.State = "dead";
+            target.State = "dead";
+            return 2;
         }
-
+        return 0;
     }
 
-    
+    //Simply check to see if we can take damage and return true after applying damage
+    //Also checks to see if we should be dead/unconcious
+    bool TakeDamage(Player target,float dmg)
+    {
+        switch (HPStateUpdate(target))
+        {
+            case 0:
+                target.CurrentHP -= dmg;
+                HPStateUpdate(target);
+                return true;
+            case 1:
+                target.CurrentHP -= dmg;
+                HPStateUpdate(target);
+                return true;
+            case 2:
+                return false;
+        }
+        //IDK WHEN WE WOULD EVER GET HERE BUT WE DUN GOOFED IF WE DO
+        return false;
+    }
 
+    //pretty self explanitory
+    bool TakeHunger(Player target)
+    {
+        if (target.Hunger > 0)
+        {
+            target.Hunger--;
+            return true;
+        } else {
+            TakeDamage(target,DamagePerTick);
+            return false;
+        }
+    }
+
+    bool TakeThirst(Player target)
+    {
+        if (target.Thirst > 0)
+        {
+            target.Thirst--;
+            return true;
+        } else {
+            TakeDamage(target, DamagePerTick);
+            return false;
+        }
+    }
+
+    //Timer to make sure we only trigger methods when we intend to
+    private bool SetTimer(float timer, float offset)
+    {
+        if (Time.time >= timer)
+        {
+            timer = Time.time + offset;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    #endregion
 }
