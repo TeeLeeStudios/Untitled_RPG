@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4711782070615988567}
   m_Layer: 8
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,7 +105,8 @@ GameObject:
   - component: {fileID: 774103662831005419}
   - component: {fileID: 571387207824256527}
   - component: {fileID: 2633930167570993732}
-  - component: {fileID: 7043365627912234305}
+  - component: {fileID: -3069526813859213072}
+  - component: {fileID: 6904305185217794556}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -143,8 +144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverOnly: 0
   localPlayerAuthority: 1
-  m_AssetId: 
-  m_SceneId: 2957020574
+  m_AssetId: e229b7c9802eea341a82a144ac50d297
+  m_SceneId: 0
 --- !u!114 &571387207824256527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,8 +174,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncInterval: 0.1
   Speed: 10
-  JumpHeight: 8
---- !u!54 &7043365627912234305
+  JumpHeight: 5
+--- !u!114 &-3069526813859213072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7052523405762710702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8f7c159f9bfc8243b4d9427ba47b0eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncInterval: 0.1
+  selectionMaterial: {fileID: 2100000, guid: adfc5291918c0954891f1ed822e282a0, type: 2}
+  defaultMeterial: {fileID: 2100000, guid: ddab3137a775e8b4aa6d8aa0b1d3f0b3, type: 2}
+--- !u!54 &6904305185217794556
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,7 +204,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!1 &8084804873402718123
 GameObject:
@@ -287,6 +303,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FieldOfView: 70
-  sensitivity: 5
+  sensitivity: 3
   smoothing: 2
   character: {fileID: 0}

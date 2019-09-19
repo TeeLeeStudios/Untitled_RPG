@@ -8,6 +8,7 @@ public class Controls : NetworkBehaviour
 
     private Rigidbody rb;
     private new Transform transform;
+    private Renderer rend;
     private Vector3 Direction;
     public int Speed;
     public float JumpHeight;
@@ -19,8 +20,9 @@ public class Controls : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody>();
         transform = GetComponent<Transform>();
+        rend = GetComponentInChildren<Renderer>();
         Cursor.lockState = CursorLockMode.Locked;
-        if (JumpHeight == 0) JumpHeight = 8;
+        if (JumpHeight == 0) JumpHeight = 5;
     }
     
     // Update is called once per frame
@@ -32,7 +34,8 @@ public class Controls : NetworkBehaviour
 
             return;
         }
-        
+
+        #region Movement
         //X and Z movement
         zAxis = Input.GetAxis("Vertical") * Speed * Time.deltaTime;
         xAxis = Input.GetAxis("Horizontal") * Speed * Time.deltaTime;
@@ -51,6 +54,20 @@ public class Controls : NetworkBehaviour
 
         //Toggle the Cursor lock
         if (Input.GetButtonDown("CursorLock")) ToggleCursorLock();
+        #endregion
+
+        #region DebugTools
+        //Right click to check renderer bounds.
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("Center: " + GetCharacterBounds("center"));
+            Debug.Log("Extents: " + GetCharacterBounds("extents"));
+            Debug.Log("Max: " + GetCharacterBounds("max"));
+            Debug.Log("Min: " + GetCharacterBounds("min"));
+            Debug.Log("Size: " + GetCharacterBounds("size"));
+        }
+
+    #endregion
 
     }
 
@@ -77,16 +94,14 @@ public class Controls : NetworkBehaviour
     
     bool _isGrounded()
     {
-        //bit shift the index layer (9) to get a bit mask
-        int LayerMask = 1 << 9;
-
         //Create a new Ray
-        Ray ray = new Ray(transform.position, transform.up * -1);
-        RaycastHit hit;
-        if(Physics.Raycast(ray,out hit, transform.localScale.y + 0.2f, LayerMask))
+        //Get the lowest point on the Renderer inside the Player GameObject (will we referred to as GO)
+        //and add 0.2f to the Y axis to account for y offset (Player GO may be inside the ground)
+        Ray ray = new Ray(GetCharacterBounds("min") + new Vector3(0,0.2f,0), Vector3.up * -1);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 0.4f))
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down)*1 , Color.black);
-            Debug.Log("Hit: " + hit);
+            Debug.Log("Hit: " + hit.transform.name);
             return true;
         }
 
@@ -94,4 +109,25 @@ public class Controls : NetworkBehaviour
         return false;
     }
 
+    //A way to get the bounding volumes of the Renderer. 
+    Vector3 GetCharacterBounds(string type)
+    {
+        switch (type)
+        {
+            //The closest approximate center to a renderer's bounds. More precise than transform.position
+            case "center":
+                return rend.bounds.center;
+            case "extents":
+                return rend.bounds.extents;
+            case "max":
+                return rend.bounds.max;
+            case "min":
+                return rend.bounds.min;
+            case "size":
+                return rend.bounds.size;
+            default:
+                return Vector3.zero;
+        }
+       
+    }
 }
