@@ -305,6 +305,9 @@
  <Reference Include="UnityEditor.Purchasing">
  <HintPath>D:/Projects/Unity/Mirror Chat/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
  </Reference>
+ <Reference Include="ICSharpCode.NRefactory">
+ <HintPath>D:/Projects/Unity/Mirror Chat/Library/PackageCache/com.unity.render-pipelines.high-definition@6.9.1-preview/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
  <Reference Include="netstandard">
  <HintPath>D:/Studio/Unity/Editor/2019.2.6f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
  </Reference>

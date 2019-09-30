@@ -298,6 +298,9 @@
  <Reference Include="UnityEditor.Purchasing">
  <HintPath>D:/Projects/Unity/Mirror Chat/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
  </Reference>
+ <Reference Include="ICSharpCode.NRefactory">
+ <HintPath>D:/Projects/Unity/Mirror Chat/Library/PackageCache/com.unity.render-pipelines.high-definition@6.9.1-preview/Editor/Core/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
  <Reference Include="nunit.framework">
  <HintPath>D:/Projects/Unity/Mirror Chat/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
