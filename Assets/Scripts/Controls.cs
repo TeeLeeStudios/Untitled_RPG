@@ -10,8 +10,10 @@ public class Controls : NetworkBehaviour
     private new Transform transform;
     private Renderer rend;
     private Vector3 Direction;
-    public int Speed;
+    public int WalkSpeed;
+    public int RunSpeed;
     public float JumpHeight;
+    private bool Run;
     private float zAxis;
     private float xAxis;
 
@@ -22,7 +24,10 @@ public class Controls : NetworkBehaviour
         transform = GetComponent<Transform>();
         rend = GetComponentInChildren<Renderer>();
         Cursor.lockState = CursorLockMode.Locked;
-        if (JumpHeight == 0) JumpHeight = 5;
+        if (JumpHeight == 0) JumpHeight = 4;
+        if (RunSpeed == 0) RunSpeed = 6;
+        if (WalkSpeed == 0) WalkSpeed = 4;
+        Run = false;
     }
     
     // Update is called once per frame
@@ -37,9 +42,14 @@ public class Controls : NetworkBehaviour
 
         #region Movement
         //X and Z movement
-        zAxis = Input.GetAxis("Vertical") * Speed * Time.deltaTime;
-        xAxis = Input.GetAxis("Horizontal") * Speed * Time.deltaTime;
-        transform.Translate(xAxis, 0, zAxis);
+
+
+        //Enable or disable run
+        if (Input.GetButtonDown("Sprint"))
+        {
+            Debug.Log("Pressed Sprint Button!");
+            ToggleRun();
+        }
 
         //Y movement
 
@@ -71,6 +81,23 @@ public class Controls : NetworkBehaviour
 
     }
 
+    void Move()
+    {
+        if (Run)
+        {
+            zAxis = Input.GetAxis("Vertical") * RunSpeed * Time.deltaTime;
+            xAxis = Input.GetAxis("Horizontal") * RunSpeed * Time.deltaTime;
+        }
+        else
+        {
+            zAxis = Input.GetAxis("Vertical") * WalkSpeed * Time.deltaTime;
+            xAxis = Input.GetAxis("Horizontal") * WalkSpeed * Time.deltaTime;
+        }
+
+        //Set the position
+        transform.Translate(xAxis, 0, zAxis);
+    }
+
     void ToggleCursorLock()
     {
         if (Cursor.lockState == CursorLockMode.Locked)
@@ -91,6 +118,16 @@ public class Controls : NetworkBehaviour
         }
     }
 
+    bool ToggleRun()
+    {
+        if (Run)
+        {
+            Run = false;
+            return Run;
+        }
+        Run = true;
+        return Run;
+    }
     
     bool _isGrounded()
     {
