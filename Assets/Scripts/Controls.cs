@@ -10,12 +10,15 @@ public class Controls : NetworkBehaviour
     private new Transform transform;
     private Renderer rend;
     private Vector3 Direction;
+
     public int WalkSpeed;
     public int RunSpeed;
     public float JumpHeight;
+
     private bool Run;
-    private float zAxis;
-    private float xAxis;
+
+    [SerializeField]
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -23,11 +26,13 @@ public class Controls : NetworkBehaviour
         rb = GetComponent<Rigidbody>();
         transform = GetComponent<Transform>();
         rend = GetComponentInChildren<Renderer>();
+        animator = GetComponentInChildren<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
         if (JumpHeight == 0) JumpHeight = 4;
         if (RunSpeed == 0) RunSpeed = 6;
         if (WalkSpeed == 0) WalkSpeed = 4;
         Run = false;
+
     }
     
     // Update is called once per frame
@@ -41,8 +46,9 @@ public class Controls : NetworkBehaviour
         }
 
         #region Movement
-        //X and Z movement
-
+        //Get X and Z inputs into a Vec2 for ez access
+        Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Move(input);
 
         //Enable or disable run
         if (Input.GetButtonDown("Sprint"))
@@ -61,6 +67,10 @@ public class Controls : NetworkBehaviour
                 Debug.Log("Jumping");
             }
         }
+
+        //Animation Controller
+        float AnimatePercent = ((Run) ? 1 : 0.5f) * input.magnitude;
+        animator.SetFloat("MoveAnimation",AnimatePercent);
 
         //Toggle the Cursor lock
         if (Input.GetButtonDown("CursorLock")) ToggleCursorLock();
@@ -81,21 +91,13 @@ public class Controls : NetworkBehaviour
 
     }
 
-    void Move()
+    void Move(Vector2 input)
     {
-        if (Run)
-        {
-            zAxis = Input.GetAxis("Vertical") * RunSpeed * Time.deltaTime;
-            xAxis = Input.GetAxis("Horizontal") * RunSpeed * Time.deltaTime;
-        }
-        else
-        {
-            zAxis = Input.GetAxis("Vertical") * WalkSpeed * Time.deltaTime;
-            xAxis = Input.GetAxis("Horizontal") * WalkSpeed * Time.deltaTime;
-        }
-
-        //Set the position
-        transform.Translate(xAxis, 0, zAxis);
+        //Set float Speed_ to either run/walk speed using ? bool operator
+        float Speedx = ((Run) ? RunSpeed : WalkSpeed) * Time.deltaTime * input.x;
+        float Speedz = ((Run) ? RunSpeed : WalkSpeed) * Time.deltaTime * input.y;
+        //Finally set the new transform
+        transform.Translate(Speedx, 0, Speedz);
     }
 
     void ToggleCursorLock()
